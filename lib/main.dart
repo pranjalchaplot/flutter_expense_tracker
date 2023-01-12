@@ -1,11 +1,29 @@
+import 'package:expense_tracker/transaction_card.dart';
 import 'package:flutter/material.dart';
 
+import './transaction.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final List<Transaction> transactions = [
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +31,20 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text('Expense Tracker')),
         body: Column(
-          children: const [
-            Card(
-              child: Text('Char!'),
+          children: [
+            const Card(
+              color: Colors.blue,
+              child: SizedBox(
+                width: 100,
+                child: Text('Char!'),
+              ),
             ),
-            Card(
-              child: Text('List of Tx'),
+            Column(
+              children: [
+                ...transactions.map((tx) {
+                  return TransactionCard(tx);
+                })
+              ],
             )
           ],
         ),
