@@ -43,7 +43,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  DateFormat().format(transaction.date),
+                  DateFormat.yMMMd().format(transaction.date),
                   style: const TextStyle(
                     color: Colors.grey,
                   ),
