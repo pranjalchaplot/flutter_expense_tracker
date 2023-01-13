@@ -25,6 +25,9 @@ class MyApp extends StatelessWidget {
     ),
   ];
 
+  dynamic titleInput;
+  dynamic amountInput;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,6 +40,40 @@ class MyApp extends StatelessWidget {
               child: SizedBox(
                 width: 100,
                 child: Text('Char!'),
+              ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextField(
+                      onChanged: (value) => titleInput = value,
+                      decoration: const InputDecoration(labelText: 'Title'),
+                    ),
+                    TextField(
+                      onChanged: (value) => amountInput = value,
+                      decoration: const InputDecoration(labelText: 'Amount'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // transactions.add(
+                        //   Transaction(
+                        //     't3',
+                        //     titleInput,
+                        //     amountInput,
+                        //     DateTime.now(),
+                        //   ),
+                        // );
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.orange,
+                      ),
+                      child: const Text('Add Transaction'),
+                    ),
+                  ],
+                ),
               ),
             ),
             Column(
