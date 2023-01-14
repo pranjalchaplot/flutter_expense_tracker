@@ -24,6 +24,7 @@ class _UserTransactionState extends State<UserTransaction> {
       200,
       DateTime.now(),
     ),
+<<<<<<< HEAD
     Transaction(
       't1',
       'Food',
@@ -99,11 +100,19 @@ class _UserTransactionState extends State<UserTransaction> {
     });
   }
 
+=======
+  ];
+
+>>>>>>> fb5e971b2d0dad84c2a1ed3d2ed984e2c52a6487
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+<<<<<<< HEAD
         NewTransaction(addTransactions),
+=======
+        NewTransaction(),
+>>>>>>> fb5e971b2d0dad84c2a1ed3d2ed984e2c52a6487
         TransactionList(_userTransaction),
       ],
     );

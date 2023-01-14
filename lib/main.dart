@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Expense Tracker')),
+<<<<<<< HEAD
         body: SingleChildScrollView(
           child: Column(
             children: const [
@@ -30,6 +31,19 @@ class MyApp extends StatelessWidget {
               UserTransaction(),
             ],
           ),
+=======
+        body: Column(
+          children: const [
+            Card(
+              color: Colors.blue,
+              child: SizedBox(
+                width: 100,
+                child: Text('Chart!'),
+              ),
+            ),
+            UserTransaction(),
+          ],
+>>>>>>> fb5e971b2d0dad84c2a1ed3d2ed984e2c52a6487
         ),
       ),
     );
