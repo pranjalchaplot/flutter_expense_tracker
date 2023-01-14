@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
-  NewTransaction({super.key});
+  final Function addTransactions;
+
+  NewTransaction(this.addTransactions, {super.key});
+
   final titleController = TextEditingController();
   final amountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
               controller: titleController,
@@ -22,14 +24,10 @@ class NewTransaction extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // transactions.add(
-                //   Transaction(
-                //     't3',
-                //     titleInput,
-                //     amountInput,
-                //     DateTime.now(),
-                //   ),
-                // );
+                addTransactions(
+                  titleController.text,
+                  amountController.text,
+                );
               },
               style: TextButton.styleFrom(
                 foregroundColor: Colors.orange,
