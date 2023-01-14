@@ -24,66 +24,6 @@ class _UserTransactionState extends State<UserTransaction> {
       200,
       DateTime.now(),
     ),
-    Transaction(
-      't1',
-      'Food',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't2',
-      'Nothing Phone (1)',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't1',
-      'Food',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't2',
-      'Nothing Phone (1)',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't1',
-      'Food',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't2',
-      'Nothing Phone (1)',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't1',
-      'Food',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't2',
-      'Nothing Phone (1)',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't1',
-      'Food',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't2',
-      'Nothing Phone (1)',
-      200,
-      DateTime.now(),
-    ),
   ];
 
   void addTransactions(String title, String amount) {
