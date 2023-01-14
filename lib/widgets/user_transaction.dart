@@ -24,13 +24,86 @@ class _UserTransactionState extends State<UserTransaction> {
       200,
       DateTime.now(),
     ),
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
   ];
+
+  void addTransactions(String title, String amount) {
+    final tx = Transaction(
+      DateTime.now().toString(),
+      title,
+      double.parse(amount),
+      DateTime.now(),
+    );
+
+    setState(() {
+      _userTransaction.add(tx);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        NewTransaction(),
+        NewTransaction(addTransactions),
         TransactionList(_userTransaction),
       ],
     );
