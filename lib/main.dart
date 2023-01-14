@@ -17,17 +17,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Expense Tracker')),
-        body: Column(
-          children: const [
-            Card(
-              color: Colors.blue,
-              child: SizedBox(
-                width: 100,
-                child: Text('Chart!'),
+        body: SingleChildScrollView(
+          child: Column(
+            children: const [
+              Card(
+                color: Colors.blue,
+                child: SizedBox(
+                  width: 100,
+                  child: Text('Chart!'),
+                ),
               ),
-            ),
-            UserTransaction(),
-          ],
+              UserTransaction(),
+            ],
+          ),
         ),
       ),
     );
