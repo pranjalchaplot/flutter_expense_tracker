@@ -59,6 +59,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+        fontFamily: 'Quicksand',
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Expense Tracker'),
