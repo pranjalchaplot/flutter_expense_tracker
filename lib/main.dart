@@ -1,3 +1,4 @@
+import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 import './models/transaction.dart';
@@ -16,18 +17,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final List<Transaction> _userTransaction = [
-    Transaction(
-      't1',
-      'Food',
-      200,
-      DateTime.now(),
-    ),
-    Transaction(
-      't2',
-      'Nothing Phone (1)',
-      200,
-      DateTime.now(),
-    ),
+    // Transaction(
+    //   't1',
+    //   'Food',
+    //   200,
+    //   DateTime.now(),
+    // ),
+    // Transaction(
+    //   't2',
+    //   'Nothing Phone (1)',
+    //   200,
+    //   DateTime.now(),
+    // ),
   ];
 
   void _addTransactions(String title, double amount) {
@@ -56,6 +57,16 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  List<Transaction> get _recentTransactions {
+    return _userTransaction.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -67,11 +78,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Expense Tracker'),
           actions: [
-            IconButton(
-              onPressed: (() => _startAddNewTransaction(context)),
-              icon: const Icon(
-                Icons.add,
-                color: Colors.white,
+            Builder(
+              builder: (ctx) => IconButton(
+                onPressed: () => _startAddNewTransaction(ctx),
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
@@ -85,14 +98,9 @@ class _MyAppState extends State<MyApp> {
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Card(
-                color: Colors.blue,
-                child: SizedBox(
-                  width: 100,
-                  child: Text('Chart!'),
-                ),
-              ),
+              Chart(_recentTransactions),
               TransactionList(_userTransaction),
             ],
           ),
