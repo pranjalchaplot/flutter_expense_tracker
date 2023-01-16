@@ -30,6 +30,12 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get totalSpending {
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + (item['amount'] as double);
+    });
+  }
+
   const Chart(this.recentTransactions, {super.key});
 
   @override
@@ -41,10 +47,15 @@ class Chart extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ...groupedTransactionValues.map((item) {
-            return ChartBar(
-              item['day'].toString(),
-              double.parse(item['amount'].toString()),
-              0.5,
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                item['day'].toString(),
+                (item['amount'] as double),
+                totalSpending != 0.0
+                    ? ((item['amount'] as double) / totalSpending)
+                    : 0.0,
+              ),
             );
           })
         ],
