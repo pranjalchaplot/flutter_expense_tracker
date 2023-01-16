@@ -31,12 +31,12 @@ class _MyAppState extends State<MyApp> {
     // ),
   ];
 
-  void _addTransactions(String title, double amount) {
+  void _addTransactions(String title, double amount, DateTime date) {
     final tx = Transaction(
       DateTime.now().toString(),
       title,
       amount,
-      DateTime.now(),
+      date,
     );
 
     setState(() {
@@ -71,9 +71,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-        fontFamily: 'Quicksand',
-      ),
+          primarySwatch: Colors.lightBlue,
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                  button: TextStyle(
+                color: Colors.white,
+              ))),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Expense Tracker'),
