@@ -70,33 +70,37 @@ class _NewTransactionState extends State<NewTransaction> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 1.5,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      DateFormat.yMMMd().format(_pickedDate).toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                   TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).primaryColor,
-                    ),
                     onPressed: _presentDatePicker,
-                    child: const Text(
-                      'Choose Date 📅',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Text(
+                        DateFormat.yMMMd().format(_pickedDate),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
+                  // TextButton(
+                  //   style: TextButton.styleFrom(
+                  //     foregroundColor: Theme.of(context).primaryColor,
+                  //   ),
+                  //   onPressed: _presentDatePicker,
+                  //   child: const Text(
+                  //     'Choose Date 📅',
+                  //     style: TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
