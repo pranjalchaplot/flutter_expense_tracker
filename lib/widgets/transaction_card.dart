@@ -5,8 +5,10 @@ import '../models/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
-
-  const TransactionCard(this.transaction, {super.key});
+  final int transactionIndex;
+  final Function removeTx;
+  const TransactionCard(this.transaction, this.transactionIndex, this.removeTx,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,13 @@ class TransactionCard extends StatelessWidget {
             style: const TextStyle(
               color: Colors.grey,
             ),
+          ),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete),
+            color: Theme.of(context).errorColor,
+            onPressed: () {
+              removeTx(transactionIndex);
+            },
           ),
         )
         // Row(

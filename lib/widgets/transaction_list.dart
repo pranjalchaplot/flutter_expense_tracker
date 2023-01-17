@@ -4,19 +4,21 @@ import '../widgets/transaction_card.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> _userTransaction;
-  const TransactionList(this._userTransaction, {super.key});
+  final Function removeTx;
+  const TransactionList(this._userTransaction, this.removeTx, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Size size = MediaQuery.of(context).size;
     return SizedBox(
-      height: 450,
+      height: 550,
       child: _userTransaction.isEmpty
           ? Column(
               children: [
                 const Text(
                   'No Transaction Available',
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
@@ -31,7 +33,7 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: ((context, index) =>
-                  TransactionCard(_userTransaction[index])),
+                  TransactionCard(_userTransaction[index], index, removeTx)),
               itemCount: _userTransaction.length,
             ),
     );

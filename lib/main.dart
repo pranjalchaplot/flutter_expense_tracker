@@ -17,18 +17,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final List<Transaction> _userTransaction = [
-    // Transaction(
-    //   't1',
-    //   'Food',
-    //   200,
-    //   DateTime.now(),
-    // ),
-    // Transaction(
-    //   't2',
-    //   'Nothing Phone (1)',
-    //   200,
-    //   DateTime.now(),
-    // ),
+    Transaction(
+      't1',
+      'Food',
+      200,
+      DateTime.now(),
+    ),
+    Transaction(
+      't2',
+      'Nothing Phone (1)',
+      200,
+      DateTime.now(),
+    ),
   ];
 
   void _addTransactions(String title, double amount, DateTime date) {
@@ -44,8 +44,17 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _removeTransaction(int toBeRemovedIndex) {
+    setState(() {
+      _userTransaction.removeAt(toBeRemovedIndex);
+    });
+  }
+
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       context: ctx,
       builder: (_) {
         return GestureDetector(
@@ -73,8 +82,9 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
           primarySwatch: Colors.lightBlue,
           fontFamily: 'Quicksand',
+          errorColor: Colors.red,
           textTheme: ThemeData.light().textTheme.copyWith(
-                  button: TextStyle(
+                  button: const TextStyle(
                 color: Colors.white,
               ))),
       home: Scaffold(
@@ -104,7 +114,7 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Chart(_recentTransactions),
-              TransactionList(_userTransaction),
+              TransactionList(_userTransaction, _removeTransaction),
             ],
           ),
         ),
