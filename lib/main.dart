@@ -1,11 +1,17 @@
 import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './models/transaction.dart';
 import './widgets/new_transactions.dart';
 
 void main() {
-  runApp(MyApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
+  runApp(const MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -16,6 +22,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _showSwitch = false;
+
   final List<Transaction> _userTransaction = [
     Transaction(
       't1',
@@ -70,7 +78,7 @@ class _MyAppState extends State<MyApp> {
     return _userTransaction.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
-          Duration(days: 7),
+          const Duration(days: 7),
         ),
       );
     }).toList();
@@ -78,6 +86,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    final appBar = AppBar(
+      title: const Text('Expense Tracker'),
+      actions: [
+        Builder(
+          builder: (ctx) => IconButton(
+            onPressed: () => _startAddNewTransaction(ctx),
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
     return MaterialApp(
       theme: ThemeData(
           primarySwatch: Colors.lightBlue,
@@ -88,20 +111,7 @@ class _MyAppState extends State<MyApp> {
                 color: Colors.white,
               ))),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Expense Tracker'),
-          actions: [
-            Builder(
-              builder: (ctx) => IconButton(
-                onPressed: () => _startAddNewTransaction(ctx),
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
+        appBar: appBar,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Builder(
           builder: (ctx) => FloatingActionButton(
@@ -113,8 +123,35 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Chart(_recentTransactions),
-              TransactionList(_userTransaction, _removeTransaction),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Show Chart'),
+                  Switch(
+                      value: _showSwitch,
+                      onChanged: (val) {
+                        setState(() {
+                          _showSwitch = val;
+                        });
+                      }),
+                ],
+              ),
+              _showSwitch
+                  ? SizedBox(
+                      height: (mediaQuery.size.height -
+                              mediaQuery.padding.top -
+                              appBar.preferredSize.height) *
+                          0.7,
+                      child: Chart(_recentTransactions),
+                    )
+                  : SizedBox(
+                      height: (mediaQuery.size.height -
+                              mediaQuery.padding.top -
+                              appBar.preferredSize.height) *
+                          0.8,
+                      child:
+                          TransactionList(_userTransaction, _removeTransaction),
+                    ),
             ],
           ),
         ),
