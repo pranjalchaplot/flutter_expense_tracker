@@ -13,24 +13,26 @@ class TransactionList extends StatelessWidget {
     return SizedBox(
       height: 550,
       child: _userTransaction.isEmpty
-          ? Column(
-              children: [
-                const Text(
-                  'No Transaction Available',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  //wrapped in container because img parent(column takes infinite height)
-                  height: 200,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (context, constraints) {
+              return Column(
+                children: [
+                  const Text(
+                    'No Transaction Available',
                   ),
-                ),
-              ],
-            )
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    //wrapped in container because img parent(column takes infinite height)
+                    height: constraints.maxHeight * 0.7,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            })
           : ListView.builder(
               itemBuilder: ((context, index) =>
                   TransactionCard(_userTransaction[index], index, removeTx)),
