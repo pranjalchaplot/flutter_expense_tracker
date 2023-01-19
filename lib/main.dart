@@ -1,7 +1,6 @@
 import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import './models/transaction.dart';
 import './widgets/new_transactions.dart';
 
@@ -87,6 +86,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text('Expense Tracker'),
       actions: [
@@ -100,6 +100,13 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ],
+    );
+    final listWidget = SizedBox(
+      height: (mediaQuery.size.height -
+              mediaQuery.padding.top -
+              appBar.preferredSize.height) *
+          0.8,
+      child: TransactionList(_userTransaction, _removeTransaction),
     );
     return MaterialApp(
       theme: ThemeData(
@@ -123,35 +130,39 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Show Chart'),
-                  Switch(
-                      value: _showSwitch,
-                      onChanged: (val) {
-                        setState(() {
-                          _showSwitch = val;
-                        });
-                      }),
-                ],
-              ),
-              _showSwitch
-                  ? SizedBox(
-                      height: (mediaQuery.size.height -
-                              mediaQuery.padding.top -
-                              appBar.preferredSize.height) *
-                          0.7,
-                      child: Chart(_recentTransactions),
-                    )
-                  : SizedBox(
-                      height: (mediaQuery.size.height -
-                              mediaQuery.padding.top -
-                              appBar.preferredSize.height) *
-                          0.8,
-                      child:
-                          TransactionList(_userTransaction, _removeTransaction),
-                    ),
+              if (isLandscape)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Show Chart'),
+                    Switch(
+                        value: _showSwitch,
+                        onChanged: (val) {
+                          setState(() {
+                            _showSwitch = val;
+                          });
+                        }),
+                  ],
+                ),
+              if (!isLandscape)
+                SizedBox(
+                  height: (mediaQuery.size.height -
+                          mediaQuery.padding.top -
+                          appBar.preferredSize.height) *
+                      0.2,
+                  child: Chart(_recentTransactions),
+                ),
+              if (!isLandscape) listWidget,
+              if (isLandscape)
+                _showSwitch
+                    ? SizedBox(
+                        height: (mediaQuery.size.height -
+                                mediaQuery.padding.top -
+                                appBar.preferredSize.height) *
+                            0.7,
+                        child: Chart(_recentTransactions),
+                      )
+                    : listWidget,
             ],
           ),
         ),
