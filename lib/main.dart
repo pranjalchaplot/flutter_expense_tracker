@@ -1,15 +1,12 @@
-import 'package:expense_tracker/widgets/chart.dart';
-import 'package:expense_tracker/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+
 import './models/transaction.dart';
+
+import './widgets/chart.dart';
+import './widgets/transaction_list.dart';
 import './widgets/new_transactions.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]);
   runApp(const MaterialApp(home: MyApp()));
 }
 
