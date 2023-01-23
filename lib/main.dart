@@ -80,6 +80,33 @@ class _MyAppState extends State<MyApp> {
     }).toList();
   }
 
+  Widget _showOnLandscape(
+      MediaQueryData mediaQuery, AppBar appBar, Widget listWidget) {
+    return _showSwitch
+        ? SizedBox(
+            height: (mediaQuery.size.height -
+                    mediaQuery.padding.top -
+                    appBar.preferredSize.height) *
+                0.7,
+            child: Chart(_recentTransactions),
+          )
+        : listWidget;
+  }
+
+  List<Widget> _showOnPotrait(
+      MediaQueryData mediaQuery, AppBar appBar, Widget listWidget) {
+    return [
+      SizedBox(
+        height: (mediaQuery.size.height -
+                mediaQuery.padding.top -
+                appBar.preferredSize.height) *
+            0.2,
+        child: Chart(_recentTransactions),
+      ),
+      listWidget
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -106,14 +133,17 @@ class _MyAppState extends State<MyApp> {
       child: TransactionList(_userTransaction, _removeTransaction),
     );
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primarySwatch: Colors.lightBlue,
-          fontFamily: 'Quicksand',
-          errorColor: Colors.red,
-          textTheme: ThemeData.light().textTheme.copyWith(
-                  button: const TextStyle(
+        primarySwatch: Colors.lightBlue,
+        fontFamily: 'Quicksand',
+        errorColor: Colors.red,
+        textTheme: ThemeData.light().textTheme.copyWith(
+              button: const TextStyle(
                 color: Colors.white,
-              ))),
+              ),
+            ),
+      ),
       home: Scaffold(
         appBar: appBar,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -142,24 +172,8 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
               if (!isLandscape)
-                SizedBox(
-                  height: (mediaQuery.size.height -
-                          mediaQuery.padding.top -
-                          appBar.preferredSize.height) *
-                      0.2,
-                  child: Chart(_recentTransactions),
-                ),
-              if (!isLandscape) listWidget,
-              if (isLandscape)
-                _showSwitch
-                    ? SizedBox(
-                        height: (mediaQuery.size.height -
-                                mediaQuery.padding.top -
-                                appBar.preferredSize.height) *
-                            0.7,
-                        child: Chart(_recentTransactions),
-                      )
-                    : listWidget,
+                ..._showOnPotrait(mediaQuery, appBar, listWidget),
+              if (isLandscape) _showOnLandscape(mediaQuery, appBar, listWidget),
             ],
           ),
         ),
