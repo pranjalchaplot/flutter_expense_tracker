@@ -4,13 +4,41 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTransactions;
 
-  const NewTransaction(this.addTransactions, {super.key});
+  NewTransaction(this.addTransactions, {super.key}) {
+    print('NewTransaction constructor');
+  }
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  State<NewTransaction> createState() {
+    print('NewTransaction Create State');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+  _NewTransactionState() {
+    print('NewTransactionState Constructor');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('NewTransactionState initState');
+  }
+
+  @override
+  void didUpdateWidget(covariant NewTransaction oldWidget) {
+    // oldWidget is given for comparing the (new) widget to oldWidget for convinience.
+    super.didUpdateWidget(oldWidget);
+    print('NewTransactionState didUpdateWidget');
+  }
+
+  @override
+  void dispose() {
+    print('NewTransactionState dispose');
+    super.dispose();
+  }
+
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _pickedDate = DateTime.now();
