@@ -49,6 +49,8 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    final double bottomWidth = mediaQuery.viewInsets.bottom;
     return SingleChildScrollView(
       child: Card(
         child: Container(
@@ -56,18 +58,26 @@ class _NewTransactionState extends State<NewTransaction> {
             top: 10,
             left: 10,
             right: 10,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 30,
+            bottom: mediaQuery.orientation == Orientation.portrait
+                ? bottomWidth + 30
+                : bottomWidth + 100,
           ),
           child: Column(
             children: [
               TextField(
                 controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                  labelStyle: TextStyle(fontFamily: 'OpenSans'),
+                ),
                 onSubmitted: (_) => _submitData(),
               ),
               TextField(
                 controller: _amountController,
-                decoration: const InputDecoration(labelText: 'Amount'),
+                decoration: const InputDecoration(
+                  labelText: 'Amount',
+                  labelStyle: TextStyle(fontFamily: 'OpenSans'),
+                ),
                 keyboardType: TextInputType.number,
                 onSubmitted: (_) => _submitData(),
               ),
