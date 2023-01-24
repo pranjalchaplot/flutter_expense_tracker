@@ -11,33 +11,46 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return SizedBox(
-      height: 550,
-      child: _userTransaction.isEmpty
-          ? LayoutBuilder(builder: (context, constraints) {
-              return Column(
-                children: [
-                  const Text(
-                    'No Transaction Available',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    //wrapped in container because img parent(column takes infinite height)
-                    height: constraints.maxHeight * 0.7,
-                    child: Image.asset(
-                      'assets/images/waiting.png',
-                      fit: BoxFit.cover,
+        height: 550,
+        child: _userTransaction.isEmpty
+            ? LayoutBuilder(builder: (context, constraints) {
+                return Column(
+                  children: [
+                    const Text(
+                      'No Transaction Available',
                     ),
-                  ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      //wrapped in container because img parent(column takes infinite height)
+                      height: constraints.maxHeight * 0.7,
+                      child: Image.asset(
+                        'assets/images/waiting.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                );
+              })
+            : ListView(
+                children: [
+                  ..._userTransaction
+                      .map(
+                        (tx) => TransactionCard(
+                          key: ValueKey(tx.id),
+                          transaction: tx,
+                          transactionID: tx.id,
+                          removeTx: removeTx,
+                        ),
+                      )
+                      .toList(),
                 ],
-              );
-            })
-          : ListView.builder(
-              itemBuilder: ((context, index) =>
-                  TransactionCard(_userTransaction[index], index, removeTx)),
-              itemCount: _userTransaction.length,
-            ),
-    );
+              )
+        //  ListView.builder(
+        //     itemBuilder: ((context, index) =>
+        //     itemCount: _userTransaction.length,
+        //   ),
+        );
   }
 }

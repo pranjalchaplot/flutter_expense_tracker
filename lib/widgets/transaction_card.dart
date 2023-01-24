@@ -1,14 +1,39 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
-class TransactionCard extends StatelessWidget {
+class TransactionCard extends StatefulWidget {
   final Transaction transaction;
-  final int transactionIndex;
+  final String transactionID;
   final Function removeTx;
-  const TransactionCard(this.transaction, this.transactionIndex, this.removeTx,
-      {super.key});
+  const TransactionCard({
+    super.key,
+    required this.transaction,
+    required this.transactionID,
+    required this.removeTx,
+  }); // using super.key to forward the key value to statefulwidget
+
+  @override
+  State<TransactionCard> createState() => _TransactionCardState();
+}
+
+class _TransactionCardState extends State<TransactionCard> {
+  Color _bgColor = Colors.white;
+
+  @override
+  void initState() {
+    super.initState();
+    const availableColors = [
+      Colors.black,
+      Colors.blue,
+      Colors.green,
+      Colors.orange,
+    ];
+    _bgColor = availableColors[Random().nextInt(4)];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +46,18 @@ class TransactionCard extends StatelessWidget {
       ),
       child: ListTile(
         leading: CircleAvatar(
+          backgroundColor: _bgColor,
           child: FittedBox(
             child: Padding(
               padding: const EdgeInsets.all(6),
               child: Text(
-                '\$${transaction.amount.toStringAsFixed(2)}',
+                '\$${widget.transaction.amount.toStringAsFixed(2)}',
               ),
             ),
           ),
         ),
         title: Text(
-          transaction.title,
+          widget.transaction.title,
           style: const TextStyle(
             color: Colors.red,
             fontWeight: FontWeight.bold,
@@ -39,7 +65,7 @@ class TransactionCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          DateFormat.yMMMd().format(transaction.date),
+          DateFormat.yMMMd().format(widget.transaction.date),
           style: const TextStyle(
             color: Colors.grey,
           ),
@@ -49,13 +75,13 @@ class TransactionCard extends StatelessWidget {
                 icon: const Icon(Icons.delete),
                 color: Theme.of(context).errorColor,
                 onPressed: () {
-                  removeTx(transactionIndex);
+                  widget.removeTx(widget.transactionID);
                 },
               )
             : TextButton.icon(
                 icon: Icon(Icons.delete, color: Theme.of(context).errorColor),
                 onPressed: () {
-                  removeTx(transactionIndex);
+                  widget.removeTx(widget.transactionID);
                 },
                 label: Text(
                   'Delete',
