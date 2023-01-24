@@ -66,9 +66,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  void _removeTransaction(int toBeRemovedIndex) {
+  void _removeTransaction(String transactionID) {
     setState(() {
-      _userTransaction.removeAt(toBeRemovedIndex);
+      _userTransaction.removeWhere((tx) => tx.id == transactionID);
     });
   }
 
